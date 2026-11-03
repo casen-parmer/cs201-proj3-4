@@ -74,3 +74,7 @@ Therefore, on each "step" through time, the following must be done:
 3. GUI should update
 4. Doctor-patient pairings must occur until there is no valid pairing left
 5. "Time" is complete
+
+
+Ideas for Part 4
+1. Adding and deleting doctors (hiring/firing)
