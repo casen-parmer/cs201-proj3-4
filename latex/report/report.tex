@@ -1,0 +1,107 @@
+\documentclass[11pt]{article}
+\setlength{\headheight}{14pt}
+
+% ---------------------------------------------------------------------
+% Packages
+% ---------------------------------------------------------------------
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{pdflscape}
+\usepackage{mermaid}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{pgfplots}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage[hidelinks]{hyperref}
+
+\pgfplotsset{compat=1.16}
+
+% ---------------------------------------------------------------------
+% Course info (edit these per project)
+% ---------------------------------------------------------------------
+\newcommand{\studentname}{Riley Herchert, Shelby Yousey, Casen Parmer}
+\newcommand{\instructorname}{Dr. Yessick}
+\newcommand{\taname}{Lucas Hasting}
+\newcommand{\coursename}{CS 201}
+\newcommand{\projectname}{Project \#3/4}
+
+% ---------------------------------------------------------------------
+% Handy macros
+% ---------------------------------------------------------------------
+\newcommand{\todo}[1]{\textcolor{red}{[#1]}}
+\newcommand{\Oh}{\mathcal{O}}
+
+% ---------------------------------------------------------------------
+% Code listing style
+% ---------------------------------------------------------------------
+\lstset{
+  language=C++,
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{blue!70!black},
+  commentstyle=\color{green!40!black},
+  numbers=left, numberstyle=\tiny, numbersep=6pt,
+  frame=single, breaklines=true, columns=fullflexible,
+  showstringspaces=false
+}
+
+% Plain-output style: use as \begin{lstlisting}[style=outputstyle]
+\lstdefinestyle{outputstyle}{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  backgroundcolor=\color{gray!10},
+  frame=single,
+  numbers=none,
+  columns=fullflexible
+}
+
+% ---------------------------------------------------------------------
+% Theorem environments
+% ---------------------------------------------------------------------
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{definition}
+\newtheorem{claim}{Claim}
+
+% ---------------------------------------------------------------------
+% Header / footer
+% ---------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\coursename{} -- \projectname}
+\rhead{\studentname}
+\cfoot{\thepage}
+
+% ---------------------------------------------------------------------
+% Title
+% ---------------------------------------------------------------------
+\title{\coursename{} -- \projectname{} Report}
+\author{\studentname\\
+        Instructor: \instructorname \\
+        TA: \taname}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% =====================================================================
+\section{Problem 1: Implementation}
+% =====================================================================
+
+
+
+% =====================================================================
+% Bibliography
+% =====================================================================
+\begin{thebibliography}{9}
+
+\end{thebibliography}
+
+\end{document}

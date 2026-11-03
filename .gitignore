@@ -1,0 +1,11 @@
+# macOS
+.DS_Store
+
+# LaTeX build files
+latex/*/*.aux
+latex/*/*.fdb_latexmk
+latex/*/*.fls
+latex/*/*.log
+latex/*/*.out
+latex/*/*.synctex.gz
+latex/*/mermaid/
