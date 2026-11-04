@@ -10,13 +10,24 @@ enum class PatientStatus
     DISCHARGED
 };
 
-class Patient : Person
+class Patient : public Person
 {
 private:
     int condition;
     PatientStatus status;
+
+public:
+    Patient(std::string name, int age, std::string birthdate, int condition, PatientStatus status)
+        : Person(name, age, birthdate), condition(condition), status(status) {}
+
+    int getCondition() {
+        return condition;
+    }
+
+    PatientStatus getStatus() {
+        return status;
+    }
 };
 
-#include "patient.tpp"
 
 #endif
