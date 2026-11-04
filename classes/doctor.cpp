@@ -5,7 +5,7 @@
 
 #include "doctor.h"
 #include "person.h"
-#include "person.tpp"
+#include "person.cpp"
 
 class Doctor : public Person
 {

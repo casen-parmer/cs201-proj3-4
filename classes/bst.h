@@ -1,19 +1,20 @@
 #ifndef BST_H_FILE
 #define BST_H_FILE
 
+#include "doctor.h"
+
 namespace bst {
 
     /*
     Class representing a node in a binary search tree. 
      */
-    template <typename T, typename T2>
     class Node {
         public:
-            T value;
-            T2 key;
-            Node<T, T2>* left;
-            Node<T, T2>* right;
-            Node<T, T2>* parent;
+            Doctor value;
+            int key;
+            Node* left;
+            Node* right;
+            Node* parent;
 
             /*
             Initializes a new node with the given value
@@ -21,7 +22,7 @@ namespace bst {
             Input: value of node
             Output: N/A
             */
-            Node(T value, T2 key) {
+            Node(Doctor value, int key) {
                 this->value = value;
                 this->key = key;
                 this->left = nullptr;
@@ -33,10 +34,9 @@ namespace bst {
     /*
     Class representing a tree that is a binary search tree. 
      */
-    template <typename T, typename T2>
     class Tree {
         public:
-            Node<T, T2>* root;
+            Node* root;
 
             /*
             Initializes a tree with a null root
@@ -54,9 +54,9 @@ namespace bst {
             Input: The reference to the new node to be inserted
             Output: N/A
             */
-            void insert(Node<T, T2>* newNode) {
-                Node<T, T2>* x = this->root; //start at the root of the tree
-                Node<T, T2>* y = nullptr;
+            void insert(Node* newNode) {
+                Node* x = this->root; //start at the root of the tree
+                Node* y = nullptr;
 
                 while (x != nullptr) { //go until you reach a null node
                     y = x; //save your previous position
@@ -87,9 +87,9 @@ namespace bst {
             /*
             Find lowest rank available doctor
             */
-            Node<T, T2>* find_lowest_available_doctor(int rank, int time) {
-                Node<T, T2>* current = this->root;
-                Node<T, T2>* valid_rank = nullptr;
+            Node* find_lowest_available_doctor(int rank, int time) {
+                Node* current = this->root;
+                Node* valid_rank = nullptr;
                 while (current != nullptr) {
                     if (current->key >= rank) {
                         valid_rank = current;
@@ -112,7 +112,7 @@ namespace bst {
                             valid_rank = valid_rank->left;
                         }
                     } else {
-                        Node<T, T2>* parent = valid_rank->parent;
+                        Node* parent = valid_rank->parent;
                         while (parent != nullptr && valid_rank == parent->right) {
                             valid_rank = parent;
                             parent = parent->parent;
@@ -131,7 +131,7 @@ namespace bst {
             Input: Node to start deleting from
             Output: N/A
             */
-            void deleteSubtree(Node<T, T2>* node) {
+            void deleteSubtree(Node* node) {
                 if (node == nullptr) { // check if at the bottom
                     return;
                 }
