@@ -10,7 +10,7 @@ namespace bst {
      */
     class Node {
         public:
-            Doctor value;
+            Doctor* value;
             int key;
             Node* left;
             Node* right;
@@ -22,7 +22,7 @@ namespace bst {
             Input: value of node
             Output: N/A
             */
-            Node(Doctor value, int key) {
+            Node(Doctor* value, int key) {
                 this->value = value;
                 this->key = key;
                 this->left = nullptr;
@@ -102,7 +102,7 @@ namespace bst {
 
 
                 while (valid_rank != nullptr) {
-                    if (valid_rank->value->available && valid_rank->value->start_time <= time && valid_rank->value->end_time > time) {
+                    if (valid_rank->value->isAvailable() && valid_rank->value->getStartTime() <= time && valid_rank->value->getEndTime() > time) {
                         return valid_rank; // Return the lowest valid rank found
                     }
 
