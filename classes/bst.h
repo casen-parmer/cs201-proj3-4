@@ -60,10 +60,6 @@ namespace bst {
 
                 while (x != nullptr) { //go until you reach a null node
                     y = x; //save your previous position
-                    if (newNode->key == x->key) {
-                        delete newNode; //Value exists don't waste memory
-                        return; // Value already exists, do nothing
-                    }
 
                     if (newNode->key < x->key) { //determine whether it goes left or right and move in that direction
                         x = x->left;
