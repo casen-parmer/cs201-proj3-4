@@ -8,19 +8,33 @@
 class Person
 {
 protected:
+    static int next_id;
     std::string name;
     int age;
     std::string birthdate;
     int id;
 
 public:
-    Person(std::string name, int age, std::string birthdate);
-    std::string getName();
-    int getAge();
-    std::string getBirthdate();
-    int getId();
+    Person(std::string name, int age, std::string birthdate) {
+        this->name = name;
+        this->age = age;
+        this->birthdate = birthdate;
+        this->id = next_id++;
+    }
+    std::string getName() {
+        return name;
+    }
+    int getAge() {
+        return age;
+    }
+    std::string getBirthdate() {
+        return birthdate;
+    }
+    int getId() {
+        return id;
+    }
 };
 
-#include "person.cpp"
+int Person::next_id = 1;
 
 #endif
