@@ -12,9 +12,15 @@ private:
     int start_time;
     int end_time;
 public:
-    bool isAvailable() const;
-    int getStartTime() const;
-    int getEndTime() const;
+    bool isAvailable() {
+        return available;
+    }
+    int getStartTime() const {
+        return start_time;
+    }
+    int getEndTime() const {
+        return end_time;
+    }
     Doctor(bool available, int start_time, int end_time);
 };
 
