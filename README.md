@@ -79,3 +79,4 @@ Therefore, on each "step" through time, the following must be done:
 Ideas for Part 4
 1. Adding and deleting doctors (hiring/firing) from BST but you still want them on file so you keep their record on the B tree
 2. Keep records of which doctors saw who
+3. Adding persistent memory between sessions (txt file so not from scratch everytime)
