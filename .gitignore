@@ -9,3 +9,6 @@ latex/*/*.log
 latex/*/*.out
 latex/*/*.synctex.gz
 latex/*/mermaid/
+# build output
+hospital
+hospital.exe
