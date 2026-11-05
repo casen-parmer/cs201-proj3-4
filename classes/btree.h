@@ -146,7 +146,29 @@ namespace b_tree {
 
             }
 
-            // add destructor and search
+            T* searchHelper(Node<T, T2>* node, T2 key){
+                int i = 0;
+                //search for position by going until key is greater than key in node
+                while (i < node->keys.size() && key > node->keys[i]) {
+                    i++;
+                }
+                //if the key matches return the value
+                if (i < node->keys.size() && key == node->keys[i]) {
+                    return node->values[i];
+                }
+                //if it is a leaf search failed
+                if (node->leaf) {
+                    return nullptr;
+                }
+                //recursively search the next level
+                return searchHelper(node->children[i], key);
+            }
+
+            T* search(T2 key) {
+                return searchHelper(root, key);
+            }
+
+            // add destructor
 
     };
 
