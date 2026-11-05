@@ -168,7 +168,19 @@ namespace b_tree {
                 return searchHelper(root, key);
             }
 
-            // add destructor
+            void deleteTree(Node<T, T2>* node) {
+                if (node == nullptr) {
+                    return;
+                }
+                for (int i = 0; i < node->children.size(); i++) {
+                    deleteTree(node->children[i]);
+                }
+                delete node;
+            }
+
+            ~BTree() {
+                deleteTree(root);
+            }
 
     };
 
