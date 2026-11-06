@@ -21,7 +21,14 @@ int main()
     };
 
     sf::RenderWindow window(sf::VideoMode({600, 400}), "Patients & Doctors");
-    const sf::Font font("C:/Windows/Fonts/arial.ttf");
+    
+    sf::Font font;
+    for (const char* path : {"C:/Windows/Fonts/arial.ttf",
+                            "/System/Library/Fonts/Supplemental/Arial.ttf"}) {
+        if (std::filesystem::exists(path) && font.openFromFile(path)) {
+            break;
+        }
+    }
 
     // set up paitent and doctor shapes
     sf::Text text(font, "", 20);
