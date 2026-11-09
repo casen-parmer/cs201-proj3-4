@@ -8,7 +8,9 @@ latex/*/*.fls
 latex/*/*.log
 latex/*/*.out
 latex/*/*.synctex.gz
-latex/*/mermaid/
+latex/*/mermaid
+
 # build output
+main
 hospital
 hospital.exe
