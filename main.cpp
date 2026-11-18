@@ -5,6 +5,10 @@
 #include <vector>
 
 #include "classes/doctor.h"
+#include "classes/btree.h"
+#include "classes/patient_heap.h"
+
+//in final review make sure only code is in headers for templates
 
 int main()
 {
@@ -14,11 +18,32 @@ int main()
         {"Cal", 22, "2003-01-30", 6, PatientStatus::WAITING},
         {"Dee", 45, "1980-06-11", 8, PatientStatus::IN_VISIT, 5},
         {"Eli", 9, "2016-12-03", 7, PatientStatus::IN_VISIT, 4},
+        {"Fay", 28, "1997-08-14", 2, PatientStatus::DISCHARGED},
+        {"Gus", 73, "1952-11-25", 3, PatientStatus::DISCHARGED},
+        {"Hal", 16, "2009-02-07", 1, PatientStatus::DISCHARGED},
+        {"Ivy", 50, "1975-05-19", 4, PatientStatus::DISCHARGED},
+        {"Jon", 39, "1986-10-02", 2, PatientStatus::DISCHARGED},
     };
     std::vector<Doctor> doctors = {
         {"Dr. Fox", 52, "1973-03-08", 9, false, 480, 1200, &patients[3]},
         {"Dr. Gray", 38, "1987-07-21", 6, false, 480, 1200, &patients[4]},
     };
+
+
+    b_tree::BTree<Person, int> person_tree(10);
+    //initialize patient heap
+
+    for (Patient& p : patients) {
+        person_tree.insert(&p, p.getId());
+        if (p.getStatus() != PatientStatus::DISCHARGED) {
+            //add to patient heap if not discharged
+        }
+    }
+
+    for (Doctor& d : doctors) {
+        person_tree.insert(&d, d.getId());
+
+    }
 
     sf::RenderWindow window(sf::VideoMode({600, 400}), "Patients & Doctors");
     
