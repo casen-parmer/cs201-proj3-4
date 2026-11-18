@@ -7,6 +7,7 @@
 #include "classes/doctor.h"
 #include "classes/btree.h"
 #include "classes/patient_heap.h"
+#include "classes/bst.h"
 
 //in final review make sure only code is in headers for templates
 
