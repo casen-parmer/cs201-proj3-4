@@ -31,18 +31,24 @@ int main()
 
 
     b_tree::BTree<Person, int> person_tree(10);
+
     //initialize patient heap
+    PatientHeap patient_heap;
+
+    //initialize BST for doctors
+    bst::Tree doctor_tree;
 
     for (Patient& p : patients) {
         person_tree.insert(&p, p.getId());
         if (p.getStatus() != PatientStatus::DISCHARGED) {
             //add to patient heap if not discharged
+            patient_heap.push(&p);
         }
     }
 
     for (Doctor& d : doctors) {
         person_tree.insert(&d, d.getId());
-
+        doctor_tree.insert(new bst::Node(&d, d.getSkill()));
     }
 
     sf::RenderWindow window(sf::VideoMode({600, 400}), "Patients & Doctors");
