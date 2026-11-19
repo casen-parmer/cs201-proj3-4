@@ -1,5 +1,7 @@
 # cs201-proj3-4
 
+Space advances 1 minute. Waiting patient's conditions get worse by 1 per minute. If a paitent's criticality advances past 10 they move to failed to treat. Treatment takes max(1, 10 + condition - skill) minutes.
+
 **Brainstorming and project planning**
 
 For project proposals and reports, see /latex folder

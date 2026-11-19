@@ -7,6 +7,7 @@
 
 class Doctor : public Person
 {
+    friend class Simulation;
 private:
     int skill;
     bool available;

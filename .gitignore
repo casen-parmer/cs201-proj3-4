@@ -14,3 +14,13 @@ latex/*/mermaid
 main
 hospital
 hospital.exe
+simulation_check
+simulation_check.exe
+
+# Visual Studio / CMake / VS Code local files
+.vs/
+.vscode/
+.vsconfig
+out/
+build/
+CMakeUserPresets.json

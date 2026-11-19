@@ -8,7 +8,7 @@
 class Person
 {
 protected:
-    static int next_id;
+    inline static int next_id = 1;
     std::string name;
     int age;
     std::string birthdate;
@@ -34,7 +34,5 @@ public:
         return id;
     }
 };
-
-int Person::next_id = 1;
 
 #endif

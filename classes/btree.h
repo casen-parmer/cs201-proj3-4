@@ -165,7 +165,7 @@ namespace b_tree {
             }
 
             T* search(T2 key) {
-                return searchHelper(root, key);
+                return root ? searchHelper(root, key) : nullptr;
             }
 
             void deleteTree(Node<T, T2>* node) {
