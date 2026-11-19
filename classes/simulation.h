@@ -6,7 +6,8 @@
 #include "bst.h"
 #include "btree.h"
 
-class Simulation {
+class Simulation
+{
 public:
     std::vector<Patient> patients;
     std::vector<Doctor> doctors;
@@ -15,8 +16,8 @@ public:
     bool paired = true;
 
     Simulation(std::vector<Patient> patients, std::vector<Doctor> doctors, int start = 480);
-    Simulation(const Simulation&) = delete;
-    Simulation& operator=(const Simulation&) = delete;
+    Simulation(const Simulation &) = delete;
+    Simulation &operator=(const Simulation &) = delete;
 
     void step();
     // Alternates between start-of-minute and end of minute to make the arrival/pairing clear

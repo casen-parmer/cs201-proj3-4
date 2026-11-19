@@ -1,14 +1,15 @@
 # macOS
 .DS_Store
 
-# LaTeX build files
-latex/*/*.aux
-latex/*/*.fdb_latexmk
-latex/*/*.fls
-latex/*/*.log
-latex/*/*.out
-latex/*/*.synctex.gz
-latex/*/mermaid
+# report build files
+report/*.aux
+report/*.fdb_reportmk
+report/*.fls
+report/*.log
+report/*.out
+report/*.synctex.gz
+report/mermaid
+report/*.fdb_latexmk
 
 # build output
 main
