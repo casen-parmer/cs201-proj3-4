@@ -10,8 +10,10 @@ Simulation::Simulation(std::vector<Patient> patients, std::vector<Doctor> doctor
         records.insert(&p, p.getId());
     }
     for (Doctor& d : this->doctors) {
+        records.insert(&d, d.getId());
         doctor_tree.insert(new bst::Node(&d, d.skill));
     }
+    update_arrivals();
     pair_and_close();
 }
 
