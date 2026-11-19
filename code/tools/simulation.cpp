@@ -1,5 +1,30 @@
 // Hospital event processing, using the existing B-tree, doctor BST and patient priority queue.
 #include "simulation.h"
+
+Simulation::Simulation(int startTime) : time(startTime - 1), paired(true) {}
+
+Simulation::Simulation() : time(480), paired(true) {}
+
+void Simulation::addPerson(Patient patient)
+{
+    Patient *p = records.insert(std::make_unique<Patient>(std::move(patient)));
+    if (p)
+    {
+        patientQueue.push(p);
+    }
+}
+
+void Simulation::addPerson(Doctor doctor)
+{
+    Doctor *d = records.insert(std::make_unique<Doctor>(std::move(doctor)));
+    if (d)
+    {
+        offShiftDoctors.push(d);
+    }
+}
+
+/*
+#include "simulation.h"
 #include "patient_heap.h"
 #include "patient.h"
 #include <algorithm>
@@ -93,3 +118,4 @@ void Simulation::pair_and_close()
         if (p.status == PatientStatus::WAITING && p.condition == 10)
             p.status = PatientStatus::FAILED_TO_TREAT;
 }
+*/

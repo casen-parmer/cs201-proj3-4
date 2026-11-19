@@ -31,22 +31,3 @@ public:
     void worsenCondition();
     void updateStatus(PatientStatus newStat);
 };
-
-/*
-    Patient(std::string name, int age, std::string birthdate, int condition,
-            PatientStatus status = PatientStatus::SCHEDULED, std::optional<int> eta = {},
-            int arrival_time = 480)
-        : Person(name, age, birthdate), condition(condition), status(status), eta(eta),
-          arrival_time(arrival_time) {}
-
-    std::optional<int> getEta() {
-        return eta;
-    }
-
-    int getCondition() {
-        return condition;
-    }
-
-    PatientStatus getStatus() {
-        return status;
-    }*/
