@@ -1,9 +1,7 @@
 // header comment
 
-#ifndef PATIENT_H
-#define PATIENT_H
+#pragma once
 
-#include <optional>
 #include "person.h"
 
 enum class PatientStatus
@@ -17,14 +15,24 @@ enum class PatientStatus
 
 class Patient : public Person
 {
-    friend class Simulation;
 private:
     int condition;
     PatientStatus status;
-    std::optional<int> eta;  // eta of treatment being finished, if they are being treated
-    int arrival_time;
+    int eta; // eta of treatment being finished, if they are being treated
+    int arrivalTime;
 
 public:
+    Patient(std::string name, int age, std::string birthdate, int condition, int arrivalTime);
+    void seeDoctor(int eta);
+    PatientStatus getStatus();
+    int getETA();
+    int getArrivalTime();
+    int getCondition();
+    void worsenCondition();
+    void updateStatus(PatientStatus newStat);
+};
+
+/*
     Patient(std::string name, int age, std::string birthdate, int condition,
             PatientStatus status = PatientStatus::SCHEDULED, std::optional<int> eta = {},
             int arrival_time = 480)
@@ -41,8 +49,4 @@ public:
 
     PatientStatus getStatus() {
         return status;
-    }
-};
-
-
-#endif
+    }*/
