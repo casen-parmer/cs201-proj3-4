@@ -19,7 +19,7 @@ private:
 
     // data structures
     // source of truth, owns every patient and doctor
-    bTree::bTree<Person, PersonByID> records(10);
+    bTree::bTree<Person, PersonByID> records{10};
     // patients not yet seen, earliest arrival on top
     maxHeap::maxHeap<Patient, PatientByArrival> patientQueue;
     // free doctors on shift, most skilled = max
