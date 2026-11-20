@@ -23,7 +23,7 @@ private:
     // patients not yet seen, earliest arrival on top
     maxHeap::maxHeap<Patient, PatientByArrival> patientQueue;
     // free doctors on shift, most skilled = max
-    BST::BST<Doctor, DoctorBySkill> shiftDoctors;
+    bst::Tree shiftDoctors;
     // doctors not yet on shift, earliest start on top
     maxHeap::maxHeap<Doctor, DoctorByStartTime> offShiftDoctors;
     // visits in progress
