@@ -30,15 +30,6 @@ int Patient::getCondition()
     return condition;
 }
 
-void Patient::worsenCondition()
-{
-    condition++;
-    if (condition == 10)
-    {
-        updateStatus(PatientStatus::FAILED_TO_TREAT);
-    }
-}
-
 void Patient::updateStatus(PatientStatus newStat)
 {
     status = newStat;

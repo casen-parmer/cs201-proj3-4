@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <string>
 #include <vector>
 #include "bst.h"
 #include "btree.h"
@@ -18,7 +19,7 @@ private:
 
     // data structures
     // source of truth, owns every patient and doctor
-    bTree::bTree<Person> records;
+    bTree::bTree<Person, PersonByID> records(10);
     // patients not yet seen, earliest arrival on top
     maxHeap::maxHeap<Patient, PatientByArrival> patientQueue;
     // free doctors on shift, most skilled = max
@@ -38,13 +39,17 @@ private:
     void dischargePatients();
     void startShifts();
     void createPairings();
-    bool isOnShift(Doctor *d);
     int treatmentTime(Patient *p, Doctor *d);
 
 public:
     // constructor
     Simulation();
     Simulation(int startTime);
+
+    // full minute (both phases)
+    void step();
+    // half minute for the GUI
+    void stepPhase();
 
     void addPerson(Patient patient);
     void addPerson(Doctor doctor);
@@ -54,7 +59,7 @@ public:
 
     int getTime();
     bool isPaired();
-    bool isDoctorOnShift(Doctor *d);
+    bool isOnShift(Doctor *d);
     std::vector<Patient *> getWaiting();
     std::vector<Doctor *> getDoctors();
     int getUpcomingCount();
@@ -62,7 +67,7 @@ public:
     const std::vector<std::pair<Doctor *, Patient *>> &getPairings();
     const std::vector<Patient *> &getDischarged();
     const std::vector<Patient *> &getFailed();
-}
+};
 
 /*
 public:

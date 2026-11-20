@@ -28,6 +28,5 @@ public:
     int getETA();
     int getArrivalTime();
     int getCondition();
-    void worsenCondition();
     void updateStatus(PatientStatus newStat);
 };

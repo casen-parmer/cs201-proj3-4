@@ -77,8 +77,25 @@ Therefore, on each "step" through time, the following must be done:
 4. Doctor-patient pairings must occur until there is no valid pairing left
 5. "Time" is complete
 
-
 Ideas for Part 4
+
 1. Adding and deleting doctors (hiring/firing) from BST but you still want them on file so you keep their record on the B tree
 2. Keep records of which doctors saw who
 3. Adding persistent memory between sessions (txt file so not from scratch everytime)
+
+**UPDATED**
+
+If we drop the doctor skill >= patient condition requirement, then we can do:
+LLRB of doctors on shift sorted by skill -> prefer high skill doctors
+Max heap of doctors off shift sorted by start time
+Max heap of patients sorted by arrival time
+Vector or min heap of current doctor patient pairings
+Vectors for discharged and failed patients
+B-tree for records
+
+then it’s just for every step:
+
+1. Discharge patient and re-add doctors to LLRB, if completed
+2. Add off-shift doctors to LLRB until time > start time
+3. Create pairings of doctors and patients, checking that a doctor is still on shift and a patient has not passed their min time to treatment -> if either fails, move patient/doctor to corresponding data structure. Keep iterating until time > arrival time
+   This way we’re not rebuilding the max heaps at all, we just keep pulling things off the top until time > condition. Then it’s just an additional check for the additional doctor specific or patient specific condition

@@ -13,6 +13,7 @@ protected:
     int id; // derived directly from combination of name and birthdate
 public:
     Person(std::string name, int age, std::string birthdate);
+    virtual ~Person() = default;
     std::string getName();
     int getAge();
     std::string getBirthdate();

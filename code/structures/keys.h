@@ -4,6 +4,16 @@
 
 #include "doctor.h"
 #include "patient.h"
+#include "person.h"
+
+// Person by id for the records b-tree
+struct PersonByID
+{
+    bool operator()(Person *a, Person *b) const
+    {
+        return a->getID() < b->getID();
+    }
+};
 
 // Doctor by skill for on-shift doctors
 struct DoctorBySkill
@@ -32,7 +42,7 @@ struct DoctorByStartTime
 };
 
 // Patient by arrival time, condition as first tiebreaker, id as second tiebreaker
-struct PatientByArrivalTime
+struct PatientByArrival
 {
     bool operator()(Patient *a, Patient *b) const
     {

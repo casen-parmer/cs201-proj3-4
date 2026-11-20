@@ -1,9 +1,14 @@
 // Hospital event processing, using the existing B-tree, doctor BST and patient priority queue.
 #include "simulation.h"
 
+#include <algorithm>
+#include <memory>
+
 Simulation::Simulation(int startTime) : time(startTime - 1), paired(true) {}
 
 Simulation::Simulation() : time(480), paired(true) {}
+
+// overloads in order to share person as b-tree type
 
 void Simulation::addPerson(Patient patient)
 {
@@ -22,6 +27,189 @@ void Simulation::addPerson(Doctor doctor)
         offShiftDoctors.push(d);
     }
 }
+
+// full step for testing
+
+void Simulation::step()
+{
+    stepPhase();
+    if (!paired)
+    {
+        stepPhase();
+    }
+}
+
+// half-step for GUI
+
+void Simulation::stepPhase()
+{
+    if (paired)
+    {
+        time++;
+        dischargePatients();
+        startShifts();
+        paired = false;
+    }
+    else
+    {
+        createPairings();
+        paired = true;
+    }
+}
+
+void Simulation::dischargePatients()
+{
+    // loop through current pairings and discharge any completed visits
+    for (auto it = currentPairings.begin(); it != currentPairings.end();)
+    {
+        Doctor *d = it->first;
+        Patient *p = it->second;
+        if (p->getETA() <= time)
+        {
+            p->updateStatus(PatientStatus::DISCHARGED);
+            discharged.push_back(p);
+            d->setAvailability(true);
+            // re-add doctor if still on shift
+            if (isOnShift(d))
+            {
+                shiftDoctors.insert(d);
+            }
+            it = currentPairings.erase(it);
+        }
+        else
+        {
+            it++;
+        }
+    }
+}
+
+void Simulation::startShifts()
+{
+    while (!offShiftDoctors.empty() && offShiftDoctors.top()->getStartTime() <= time)
+    {
+        Doctor *d = offShiftDoctors.top();
+        offShiftDoctors.pop();
+        if (isOnShift(d))
+        {
+            shiftDoctors.insert(d);
+        }
+    }
+}
+
+void Simulation::createPairings()
+{
+    while (!patientQueue.empty() && patientQueue.top()->getArrivalTime() <= time)
+    {
+        Patient *p = patientQueue.top();
+        // out of time
+        if (time > p->getArrivalTime() + TIME_LIMIT)
+        {
+            patientQueue.pop();
+            p->updateStatus(PatientStatus::FAILED_TO_TREAT);
+            failed.push_back(p);
+            continue;
+        }
+        // no free doctors
+        if (shiftDoctors.empty())
+        {
+            break;
+        }
+        Doctor *d = shiftDoctors.max();
+        shiftDoctors.remove(d);
+        if (!isOnShift(d))
+        {
+            continue;
+        }
+        patientQueue.pop();
+        d->setAvailability(false);
+        p->seeDoctor(time + treatmentTime(p, d));
+        currentPairings.push_back({d, p});
+    }
+}
+
+bool Simulation::isOnShift(Doctor *d)
+{
+    return d->getStartTime() <= time && time < d->getEndTime();
+}
+
+int Simulation::treatmentTime(Patient *p, Doctor *d)
+{
+    return std::max(1, 10 + p->getCondition() - d->getSkill());
+}
+
+Patient *Simulation::findPatient(const std::string &name, int age, const std::string &birthdate)
+{
+    Person probe(name, age, birthdate);
+    return records.searchAs<Patient>(&probe);
+}
+
+Doctor *Simulation::findDoctor(const std::string &name, int age, const std::string &birthdate)
+{
+    Person probe(name, age, birthdate);
+    return records.searchAs<Doctor>(&probe);
+}
+
+int Simulation::getTime() { return time; }
+bool Simulation::isPaired() { return paired; }
+
+std::vector<Patient *> Simulation::getWaiting()
+{
+    std::vector<Patient *> waiting;
+    for (Person *person : records.inorder())
+    {
+        Patient *p = dynamic_cast<Patient *>(person);
+        if (p && p->getStatus() == PatientStatus::SCHEDULED && p->getArrivalTime() <= time)
+        {
+            waiting.push_back(p);
+        }
+    }
+    std::sort(waiting.begin(), waiting.end(), [](Patient *a, Patient *b)
+              { return PatientByArrival{}(b, a); });
+    return waiting;
+}
+
+std::vector<Doctor *> Simulation::getDoctors()
+{
+    std::vector<Doctor *> doctors;
+    for (Person *person : records.inorder())
+    {
+        if (Doctor *d = dynamic_cast<Doctor *>(person))
+        {
+            doctors.push_back(d);
+        }
+    }
+    return doctors;
+}
+
+int Simulation::getUpcomingCount()
+{
+    int count = 0;
+    for (Person *person : records.inorder())
+    {
+        Patient *p = dynamic_cast<Patient *>(person);
+        if (p && p->getArrivalTime() > time)
+        {
+            count++;
+        }
+    }
+    return count;
+}
+
+Patient *Simulation::patientOf(Doctor *d)
+{
+    for (auto &pairing : currentPairings)
+    {
+        if (pairing.first == d)
+        {
+            return pairing.second;
+        }
+    }
+    return nullptr;
+}
+
+const std::vector<std::pair<Doctor *, Patient *>> &Simulation::getPairings() { return currentPairings; }
+const std::vector<Patient *> &Simulation::getDischarged() { return discharged; }
+const std::vector<Patient *> &Simulation::getFailed() { return failed; }
 
 /*
 #include "simulation.h"

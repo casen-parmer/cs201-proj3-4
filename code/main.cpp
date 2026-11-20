@@ -1,10 +1,12 @@
 // SFML view of the hospital simulation. Space advances one minute.
 #include <SFML/Graphics.hpp>
 #include <filesystem>
-#include "tools/simulation.h"
+#include "simulation.h"
+#include "datacontroller.h"
 
 int main()
 {
+    /*
     Simulation sim({
                        {"Ann", 34, "1991-04-02", 8, PatientStatus::SCHEDULED, {}, 480},
                        {"Ben", 61, "1964-09-17", 7, PatientStatus::SCHEDULED, {}, 480},
@@ -34,6 +36,10 @@ int main()
                        {"Dr. Gray", 38, "1987-07-21", 6, true, 484, 570},
                        {"Dr. Vale", 44, "1981-08-12", 10, true, 500, 750},
                    });
+    */
+
+    Simulation sim;
+    dataController::loadData(sim, 100, 10, false);
 
     sf::RenderWindow window(sf::VideoMode({1200, 650}), "Hospital Simulation");
     window.setFramerateLimit(60);
