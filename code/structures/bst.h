@@ -29,7 +29,8 @@ namespace bst
         ~Tree();
 
         void insert(Node *newNode);
-        Node *find_lowest_available_doctor(int rank, int time);
         void deleteSubtree(Node *node);
+        bool empty();
+        Doctor* max();
     };
 }

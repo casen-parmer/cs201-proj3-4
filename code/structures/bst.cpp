@@ -70,56 +70,6 @@ namespace bst
     }
 
     /*
-    Find lowest rank available doctor
-    */
-    Node *Tree::find_lowest_available_doctor(int rank, int time)
-    {
-        Node *current = this->root;
-        Node *valid_rank = nullptr;
-        while (current != nullptr)
-        {
-            if (current->key >= rank)
-            {
-                valid_rank = current;
-                current = current->left;
-            }
-            else
-            {
-                current = current->right;
-            }
-        }
-
-        while (valid_rank != nullptr)
-        {
-            if (valid_rank->value->isAvailable() && valid_rank->value->getStartTime() <= time && valid_rank->value->getEndTime() > time)
-            {
-                return valid_rank; // Return the lowest valid rank found
-            }
-
-            if (valid_rank->right != nullptr)
-            {
-                valid_rank = valid_rank->right;
-                while (valid_rank->left != nullptr)
-                {
-                    valid_rank = valid_rank->left;
-                }
-            }
-            else
-            {
-                Node *parent = valid_rank->parent;
-                while (parent != nullptr && valid_rank == parent->right)
-                {
-                    valid_rank = parent;
-                    parent = parent->parent;
-                }
-                valid_rank = parent;
-            }
-        }
-
-        return nullptr; // Return the lowest valid rank found
-    }
-
-    /*
     Recursively explore the tree and then delete each node
 
     Input: Node to start deleting from
@@ -135,6 +85,21 @@ namespace bst
         deleteSubtree(node->left);  // explore left subtree
         deleteSubtree(node->right); // explore right subtree
         delete node;                // delete node
+    }
+
+    bool Tree::empty() {
+        return this->root == nullptr;
+    }
+
+    Doctor* Tree::max() {
+        Node *current = this->root;
+        if (current == nullptr) {
+            return nullptr; 
+        }
+        while (current->right != nullptr) {
+            current = current->right;
+        }
+        return current->value;
     }
 
     /*
