@@ -4,6 +4,12 @@
 
 #include "person.h"
 
+/*
+Shelbe Yousey, Casen Parmer, Riley Herchert - Dr. Don Yessick - Lucas Hasting
+
+This header file defines the Patient Class.
+*/
+
 enum class PatientStatus
 {
     SCHEDULED,

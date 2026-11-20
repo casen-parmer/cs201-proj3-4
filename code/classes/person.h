@@ -4,6 +4,12 @@
 
 #include <string>
 
+/*
+Shelbe Yousey, Casen Parmer, Riley Herchert - Dr. Don Yessick - Lucas Hasting
+
+This header file defines the Person Class.
+*/
+
 class Person
 {
 protected:
