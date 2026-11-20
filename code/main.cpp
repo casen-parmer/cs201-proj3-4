@@ -83,57 +83,52 @@ int main()
             if (const auto *key = event->getIf<sf::Event::KeyPressed>())
             {
                 if (key->code == sf::Keyboard::Key::Space)
-                    sim.step_phase();
+                    sim.stepPhase();
             }
         }
         if (!window.isOpen())
             break;
 
         window.clear(sf::Color::White);
-        write(timestamp(sim.time) + (sim.paired ? "  (after pairing)" : "  (before pairing)"), 20, 15);
-        write(sim.paired ? "Space: +1 min (updates)" : "Space: pair & close", 20, 45);
+        write(timestamp(sim.getTime()) + (sim.isPaired() ? "  (after pairing)" : "  (before pairing)"), 20, 15);
+        write(sim.isPaired() ? "Space: +1 min (updates)" : "Space: pair & close", 20, 45);
         write("Waiting (red = critical)", 20, 95);
         write("Doctors / current visits", 350, 95);
         write("Departed", 780, 95);
 
         write("Failed to treat", 960, 95);
         float waiting_y = 135.f, departed_y = 135.f, failed_y = 135.f;
-        int scheduled = 0;
-        for (Patient &p : sim.patients)
+        int scheduled = sim.getUpcomingCount();
+        for (Patient *p : sim.getWaiting())
         {
-            if (p.getStatus() == PatientStatus::SCHEDULED)
-                ++scheduled;
-            if (p.getStatus() == PatientStatus::WAITING)
-            {
-                patient.setFillColor(p.getCondition() == 10 ? sf::Color::Red : sf::Color::Yellow);
-                draw(patient, 20, waiting_y);
-                write(p.getName() + "  " + std::to_string(p.getCondition()) + "/10", 60, waiting_y);
-                waiting_y += 42.f;
-            }
-            if (p.getStatus() == PatientStatus::FAILED_TO_TREAT)
-            {
-                write(p.getName() + "  10/10", 960, failed_y);
-                failed_y += 42.f;
-            }
-            if (p.getStatus() == PatientStatus::DISCHARGED)
-            {
-                write(p.getName() + "  0/10", 780, departed_y);
-                departed_y += 42.f;
-            }
+            patient.setFillColor(p->getCondition() == 10 ? sf::Color::Red : sf::Color::Yellow);
+            draw(patient, 20, waiting_y);
+            write(p->getName() + "  " + std::to_string(p->getCondition()) + "/10", 60, waiting_y);
+            waiting_y += 42.f;
+        }
+        for (Patient *p : sim.getFailed())
+        {
+            write(p->getName() + "  10/10", 960, failed_y);
+            failed_y += 42.f;
+        }
+        for (Patient *p : sim.getDischarged())
+        {
+            write(p->getName() + "  0/10", 780, departed_y);
+            departed_y += 42.f;
         }
 
         float y = 135.f;
-        for (Doctor &d : sim.doctors)
+        for (Doctor *d : sim.getDoctors())
         {
             draw(doctor, 350, y);
-            write(d.getName() + "  skill " + std::to_string(d.getSkill()), 395, y);
-            write(timestamp(d.getStartTime()) + " - " + timestamp(d.getEndTime()), 395, y + 25);
-            if (Patient *p = d.getPatient())
+            write(d->getName() + "  skill " + std::to_string(d->getSkill()), 395, y);
+            write(timestamp(d->getStartTime()) + " - " + timestamp(d->getEndTime()), 395, y + 25);
+            if (Patient *p = sim.patientOf(d))
                 write(p->getName() + "  " + std::to_string(p->getCondition()) +
-                          "/10  done " + timestamp(*p->getEta()),
+                          "/10  done " + timestamp(p->getETA()),
                       395, y + 50);
             else
-                write(d.isAvailable() ? "Available" : "Off shift", 395, y + 50);
+                write(sim.isOnShift(d) ? "Available" : "Off shift", 395, y + 50);
             y += 115.f;
         }
         write("Upcoming arrivals: " + std::to_string(scheduled), 20, 605);
