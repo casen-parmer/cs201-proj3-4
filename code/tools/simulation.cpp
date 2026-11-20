@@ -12,20 +12,24 @@ Simulation::Simulation() : time(480), paired(true) {}
 
 void Simulation::addPerson(Patient patient)
 {
-    Patient *p = records.insert(std::make_unique<Patient>(std::move(patient)));
-    if (p)
+    if (records.search(patient.getID()) != nullptr)
     {
-        patientQueue.push(p);
+        return;
     }
+    Patient *p = new Patient(std::move(patient));
+    records.insert(p, p->getID());
+    patientQueue.push(p);
 }
 
 void Simulation::addPerson(Doctor doctor)
 {
-    Doctor *d = records.insert(std::make_unique<Doctor>(std::move(doctor)));
-    if (d)
+    if (records.search(doctor.getID()) != nullptr)
     {
-        offShiftDoctors.push(d);
+        return;
     }
+    Doctor *d = new Doctor(std::move(doctor));
+    records.insert(d, d->getID());
+    offShiftDoctors.push(d);
 }
 
 // full step for testing
@@ -143,13 +147,13 @@ int Simulation::treatmentTime(Patient *p, Doctor *d)
 Patient *Simulation::findPatient(const std::string &name, int age, const std::string &birthdate)
 {
     Person probe(name, age, birthdate);
-    return records.searchAs<Patient>(&probe);
+    return dynamic_cast<Patient *>(records.search(probe.getID()));
 }
 
 Doctor *Simulation::findDoctor(const std::string &name, int age, const std::string &birthdate)
 {
     Person probe(name, age, birthdate);
-    return records.searchAs<Doctor>(&probe);
+    return dynamic_cast<Doctor *>(records.search(probe.getID()));
 }
 
 int Simulation::getTime() { return time; }
