@@ -72,7 +72,8 @@ void Simulation::dischargePatients()
             // re-add doctor if still on shift
             if (isOnShift(d))
             {
-                shiftDoctors.insert(d);
+                bst::Node* d_node = new bst::Node(d, d->getSkill());
+                shiftDoctors.insert(d_node);
             }
             it = currentPairings.erase(it);
         }
@@ -91,7 +92,8 @@ void Simulation::startShifts()
         offShiftDoctors.pop();
         if (isOnShift(d))
         {
-            shiftDoctors.insert(d);
+            bst::Node* d_node = new bst::Node(d, d->getSkill());
+            shiftDoctors.insert(d_node);
         }
     }
 }
@@ -115,7 +117,8 @@ void Simulation::createPairings()
             break;
         }
         Doctor *d = shiftDoctors.max();
-        shiftDoctors.remove(d);
+        bst::Node* to_remove = shiftDoctors.find(d->getID(), d->getSkill());
+        shiftDoctors.remove(to_remove);
         if (!isOnShift(d))
         {
             continue;

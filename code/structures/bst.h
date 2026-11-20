@@ -32,5 +32,7 @@ namespace bst
         void deleteSubtree(Node *node);
         bool empty();
         Doctor* max();
+        void remove(Node*);
+        Node* find(std::size_t value_id, int skill_rank);
     };
 }
