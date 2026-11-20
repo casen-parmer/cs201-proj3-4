@@ -53,8 +53,7 @@ namespace maxHeap
     }
 
     template <typename T, typename Cmp>
-    bool maxHeap<T, Cmp>::empty()
-    {
+    bool maxHeap<T, Cmp>::empty() {
         return items.empty();
     }
 }
