@@ -1,36 +1,60 @@
-#include <queue>
-#include <vector>
+// Template definitions for maxHeap, included at the bottom of maxheap.h
+// cmp(a, b) is true when a has lower priority than b, so the highest priority item stays at items[0]
 
-
-// Compare the priority levels of two paitents to determine their position in the heap
-inline constexpr auto lowerPriority = [](Patient* a, Patient* b) {
-    return a->getCondition() < b->getCondition();
-};
-
-using PatientHeap = std::priority_queue<Patient*, std::vector<Patient*>, decltype(lowerPriority)>;
+#include <utility>
 
 namespace maxHeap
 {
-    
     template <typename T, typename Cmp>
-    void maxHeap<T, Cmp>::push(T* person) {
-        this->push(person);
+    void maxHeap<T, Cmp>::push(T *item) {
+        items.push_back(item);
+        int i = items.size()-1;
+        while (i > 0 && cmp(items[(i-1)/2], items[i])) {
+            std::swap(items[(i-1)/2], items[i]);
+            i = (i - 1) / 2;
+        }
     }
 
     template <typename T, typename Cmp>
-    T* maxHeap<T, Cmp>::top() {
-        return this->top();
+    T *maxHeap<T, Cmp>::top() {
+        if (items.empty()) {
+            return nullptr;
+        }
+        return items[0];
     }
 
     template <typename T, typename Cmp>
-    void maxHeap<T, Cmp>::pop() {
-        this->pop();
+    void maxHeap<T, Cmp>::pop()
+    {
+        if (items.empty()) {
+            return;
+        }
+        items[0] = items.back();
+        items.pop_back();
+
+        int n = items.size();
+        int i = 0;
+        while (true) {
+            int left = 2*i+1;
+            int right = 2*i+2;
+            int largest = i;
+            if (left < n && cmp(items[largest], items[left])) {
+                largest = left;
+            }
+            if (right < n && cmp(items[largest], items[right])) {
+                largest = right;
+            }
+            if (largest == i) {
+                break;
+            }
+            std::swap(items[i], items[largest]);
+            i = largest;
+        }
     }
 
     template <typename T, typename Cmp>
-    bool maxHeap<T, Cmp>::empty() {
-        return this->empty();
+    bool maxHeap<T, Cmp>::empty()
+    {
+        return items.empty();
     }
-
 }
-
