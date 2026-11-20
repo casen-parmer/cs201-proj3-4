@@ -33,10 +33,6 @@ namespace b_tree {
         this->t = degree;
     }
 
-    BTree::~BTree() {
-        deleteTree(root);
-    }
-
     void BTree::splitChild(Node* parent, int index) {
         //define the full node descending into
         Node* full_node = parent->children[index];
