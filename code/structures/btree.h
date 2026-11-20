@@ -21,15 +21,13 @@ namespace b_tree {
 
             Node(Person* value, std::size_t key);
             Node(bool isLeaf);
-
             void insertValueKeyPair(Person* value, std::size_t key, int i);
             void fillWithValues(Node* fullNode, int t);
             void shrinkNode(int t);
     };
 
     /*
-    Class representing a tree that is a B tree, keyed by person id.
-    Tree owns values and deletes them when it is destroyed.
+    This class is a BTree implementation.
      */
     class BTree {
         public:
@@ -42,13 +40,10 @@ namespace b_tree {
             void splitChild(Node* parent, int index);
             void insertNonFull(Node* node, Person* value, std::size_t key);
             void insert(Person* value, std::size_t key);
-
             Person* searchHelper(Node* node, std::size_t key);
             Person* search(std::size_t key);
-
             void inorderHelper(Node* node, vector<Person*> &out);
             vector<Person*> inorder();
-
             void deleteTree(Node* node);
     };
 
