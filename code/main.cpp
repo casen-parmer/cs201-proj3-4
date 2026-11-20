@@ -41,7 +41,7 @@ int main()
     Simulation sim;
     dataController::loadData(sim, 100, 10, false);
 
-    sf::RenderWindow window(sf::VideoMode({1200, 650}), "Hospital Simulation");
+    sf::RenderWindow window(sf::VideoMode({1200, 800}), "Hospital Simulation");
     window.setFramerateLimit(60);
     window.setKeyRepeatEnabled(false);
     sf::Font font;
