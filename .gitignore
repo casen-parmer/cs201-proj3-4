@@ -13,6 +13,7 @@ report/*.fdb_latexmk
 
 # build output
 main
+output
 hospital
 hospital.exe
 simulation_check
@@ -25,3 +26,4 @@ simulation_check.exe
 out/
 build/
 CMakeUserPresets.json
+CMakePresets.json
