@@ -11,38 +11,6 @@ Runs the SFML hospital simulation viewer. Space advances one minute.
 // Launches the SFML hospital simulation window and event loop. Input: N/A. Output: exit status code.
 int main()
 {
-    /*
-    Simulation sim({
-                       {"Ann", 34, "1991-04-02", 8, PatientStatus::SCHEDULED, {}, 480},
-                       {"Ben", 61, "1964-09-17", 7, PatientStatus::SCHEDULED, {}, 480},
-                       {"Cal", 22, "2003-01-30", 6, PatientStatus::SCHEDULED, {}, 482},
-                       {"Dee", 45, "1980-06-11", 8, PatientStatus::SCHEDULED, {}, 485},
-                       {"Eli", 9, "2016-12-03", 7, PatientStatus::SCHEDULED, {}, 485},
-                       {"Fay", 28, "1997-08-14", 2, PatientStatus::SCHEDULED, {}, 488},
-                       {"Gus", 73, "1952-11-25", 3, PatientStatus::SCHEDULED, {}, 490},
-                       {"Hal", 16, "2009-02-07", 1, PatientStatus::SCHEDULED, {}, 495},
-                       {"Ivy", 50, "1975-05-19", 4, PatientStatus::SCHEDULED, {}, 500},
-                       {"Jon", 39, "1986-10-02", 2, PatientStatus::SCHEDULED, {}, 505},
-                       {"Kim", 27, "1998-03-14", 6, PatientStatus::SCHEDULED, {}, 512},
-                       {"Leo", 64, "1961-07-29", 9, PatientStatus::SCHEDULED, {}, 520},
-                       {"Mia", 19, "2006-11-05", 3, PatientStatus::SCHEDULED, {}, 530},
-                       {"Ned", 55, "1970-01-18", 8, PatientStatus::SCHEDULED, {}, 545},
-                       {"Ora", 41, "1984-09-22", 5, PatientStatus::SCHEDULED, {}, 560},
-                       {"Pat", 33, "1992-06-09", 7, PatientStatus::SCHEDULED, {}, 580},
-                       {"Rae", 70, "1955-04-30", 9, PatientStatus::SCHEDULED, {}, 605},
-                       {"Sam", 12, "2013-08-15", 2, PatientStatus::SCHEDULED, {}, 630},
-                       {"Tia", 48, "1977-12-11", 6, PatientStatus::SCHEDULED, {}, 660},
-                       {"Vic", 29, "1996-02-27", 8, PatientStatus::SCHEDULED, {}, 690},
-                       {"Wes", 58, "1967-05-03", 4, PatientStatus::SCHEDULED, {}, 715},
-                       {"Zoe", 36, "1989-10-19", 7, PatientStatus::SCHEDULED, {}, 735},
-                   },
-                   {
-                       {"Dr. Fox", 52, "1973-03-08", 10, true, 480, 500},
-                       {"Dr. Gray", 38, "1987-07-21", 6, true, 484, 570},
-                       {"Dr. Vale", 44, "1981-08-12", 10, true, 500, 750},
-                   });
-    */
-
     Simulation sim;
     dataController::loadData(sim, 100, 10, false);
 

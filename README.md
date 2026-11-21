@@ -2,6 +2,8 @@
 
 Space advances 1 minute. Waiting patient's conditions get worse by 1 per minute. If a paitent's criticality advances past 10 they move to failed to treat. Treatment takes max(1, 10 + condition - skill) minutes.
 
+**This is a scratchpad and does not reflect our final work or task list. Please see the PDF report for final details**
+
 **Brainstorming and project planning**
 
 For project proposals and reports, see /latex folder
