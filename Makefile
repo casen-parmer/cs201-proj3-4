@@ -10,6 +10,8 @@ SRCS := code/main.cpp \
         $(wildcard code/structures/*.cpp) \
         $(wildcard code/tools/*.cpp)
 
+TEST_SRCS := $(filter-out code/main.cpp,$(SRCS))
+
 build:
 	mkdir -p output
 	$(CXX) $(CXXFLAGS) $(SRCS) $(LDFLAGS) -o output/main
@@ -19,6 +21,13 @@ start: build
 
 run: build
 	./output/main
+
+test-build:
+	mkdir -p output
+	$(CXX) $(CXXFLAGS) -DTEST_MAIN $(TEST_SRCS) $(LDFLAGS) -o output/testharness
+
+test: test-build
+	./output/testharness
 
 clean:
 	rm -rf output
