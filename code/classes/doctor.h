@@ -1,18 +1,15 @@
-// header comment
+/*
+Shelbe Yousey, Casen Parmer, Riley Herchert - Dr. Don Yessick - Lucas Hasting
+Defines the Doctor class with skill level, availability, and shift bounds.
+*/
 
 #pragma once
 
 #include "person.h"
 
-/*
-Shelbe Yousey, Casen Parmer, Riley Herchert - Dr. Don Yessick - Lucas Hasting
-
-This header file defines the Doctor Class.
-*/
-
 class Doctor : public Person
 {
-    //declare private variables
+
 private:
     int skill;
     bool available;

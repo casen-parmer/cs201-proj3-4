@@ -1,4 +1,7 @@
-// header comment
+/*
+Shelbe Yousey, Casen Parmer, Riley Herchert - Dr. Don Yessick - Lucas Hasting
+Implements random generation and loading of patients and doctors into Simulation.
+*/
 
 #include "datacontroller.h"
 
@@ -216,14 +219,17 @@ namespace dataController
         "Lori",
     };
 
+    // Generates a uniform random integer in [low, high]. Input: low, high bounds. Output: random integer.
     int randomInt(int low, int high)
     {
         return std::uniform_int_distribution<int>(low, high)(rng);
     }
+    // Picks a random first name from the names list. Input: N/A. Output: name string.
     std::string randomName()
     {
         return names[randomInt(0, static_cast<int>(names.size()) - 1)];
     }
+    // Builds a YYYY-MM-DD birthdate consistent with age. Input: age in years. Output: birthdate string.
     std::string randomBirthdate(int age)
     {
         int year = 2025 - age;
@@ -232,6 +238,7 @@ namespace dataController
         return std::to_string(year) + "-" + (month < 10 ? "0" : "") + std::to_string(month) + "-" +
                (day < 10 ? "0" : "") + std::to_string(day);
     }
+    // Populates sim with generated patients and doctors. Input: sim, counts, test flag. Output: N/A.
     void loadData(Simulation &sim, int numPatients, int numDoctors, bool enableTestHarness)
     {
         for (int i = 0; i < numPatients; i++)
@@ -244,12 +251,14 @@ namespace dataController
         }
     }
 
+    // Generates a random scheduled Patient. Input: N/A. Output: constructed Patient.
     Patient generatePatient()
     {
         int age = randomInt(1, 90);
         return Patient(randomName(), age, randomBirthdate(age), randomInt(1, 9), randomInt(480, 780));
     }
 
+    // Generates a random Doctor with shift bounds. Input: N/A. Output: constructed Doctor.
     Doctor generateDoctor()
     {
         int age = randomInt(28, 70);

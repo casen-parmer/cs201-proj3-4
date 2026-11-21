@@ -1,4 +1,7 @@
-// header comment
+/*
+Shelbe Yousey, Casen Parmer, Riley Herchert - Dr. Don Yessick - Lucas Hasting
+Declares the templated maxHeap priority queue class.
+*/
 
 #pragma once
 #include <vector>

@@ -1,4 +1,7 @@
-// header comment
+/*
+Shelbe Yousey, Casen Parmer, Riley Herchert - Dr. Don Yessick - Lucas Hasting
+Declares random patient/doctor generation and loading helpers for Simulation.
+*/
 
 #pragma once
 

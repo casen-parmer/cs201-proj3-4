@@ -1,3 +1,8 @@
+/*
+Shelbe Yousey, Casen Parmer, Riley Herchert - Dr. Don Yessick - Lucas Hasting
+Implements the binary search tree methods for storing and querying on-shift doctors.
+*/
+
 #include "bst.h"
 
 namespace bst
@@ -87,10 +92,22 @@ namespace bst
         delete node;                // delete node
     }
 
+    /*
+    Checks whether the tree has no nodes
+
+    Input: N/A
+    Output: true if root is null, false otherwise
+    */
     bool Tree::empty() {
         return this->root == nullptr;
     }
 
+    /*
+    Finds the doctor with the highest skill key in the tree
+
+    Input: N/A
+    Output: pointer to the Doctor with the maximum key, or nullptr if empty
+    */
     Doctor* Tree::max() {
         Node *current = this->root;
         if (current == nullptr) {
@@ -102,16 +119,22 @@ namespace bst
         return current->value;
     }
 
+    /*
+    Finds the tree node matching the given doctor ID and skill rank
+
+    Input: value_id of the doctor and skill_rank key to search by
+    Output: pointer to the matching Node, or nullptr if not found
+    */
     Node* Tree::find(std::size_t value_id, int skill_rank) {
         Node *current = this->root;
         if (current == nullptr) {
             return nullptr; 
         }
         while (current && current->value->getID() != value_id) {
-            if (current->value->getSkill() >= skill_rank) {
-                current = current->right;
-            } else {
+            if (skill_rank < current->key) {
                 current = current->left;
+            } else {
+                current = current->right;
             }
             
         }
@@ -162,8 +185,10 @@ namespace bst
             }
 
             Doctor* tempValue = successor->value; //save the value of the successor
-            deleteSubtree(successor); //remove the successor node
+            int tempKey = successor->key; //save the key of the successor
+            remove(successor); //unlink and delete successor (guaranteed no left child)
             node->value = tempValue; //set the node's value to the successor's value
+            node->key = tempKey; //set the node's key to the successor's key
         }
 
     }

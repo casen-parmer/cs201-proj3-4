@@ -1,3 +1,8 @@
+/*
+Shelbe Yousey, Casen Parmer, Riley Herchert - Dr. Don Yessick - Lucas Hasting
+Implements the templated maxHeap push, top, pop, and empty methods.
+*/
+
 // Template definitions for maxHeap, included at the bottom of maxheap.h
 // cmp(a, b) is true when a has lower priority than b, so the highest priority item stays at items[0]
 
@@ -5,6 +10,7 @@
 
 namespace maxHeap
 {
+    // Inserts an item and sifts up to preserve heap order. Input: item pointer. Output: N/A.
     template <typename T, typename Cmp>
     void maxHeap<T, Cmp>::push(T *item) {
         items.push_back(item);
@@ -15,6 +21,7 @@ namespace maxHeap
         }
     }
 
+    // Returns the highest-priority item without removing it. Input: N/A. Output: top pointer or nullptr if empty.
     template <typename T, typename Cmp>
     T *maxHeap<T, Cmp>::top() {
         if (items.empty()) {
@@ -23,6 +30,7 @@ namespace maxHeap
         return items[0];
     }
 
+    // Removes the top item and sifts down to restore heap order. Input: N/A. Output: N/A.
     template <typename T, typename Cmp>
     void maxHeap<T, Cmp>::pop()
     {
@@ -52,6 +60,7 @@ namespace maxHeap
         }
     }
 
+    // Checks whether the heap contains no items. Input: N/A. Output: true if empty, false otherwise.
     template <typename T, typename Cmp>
     bool maxHeap<T, Cmp>::empty() {
         return items.empty();

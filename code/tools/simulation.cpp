@@ -1,15 +1,22 @@
-// Hospital event processing, using the existing B-tree, doctor BST and patient priority queue.
+/*
+Shelbe Yousey, Casen Parmer, Riley Herchert - Dr. Don Yessick - Lucas Hasting
+Implements Simulation event processing, doctor/patient pairing, and state queries.
+*/
+
 #include "simulation.h"
 
 #include <algorithm>
 #include <memory>
 
+// Constructs a Simulation starting one minute before startTime. Input: startTime minute. Output: N/A.
 Simulation::Simulation(int startTime) : time(startTime - 1), paired(true) {}
 
+// Constructs a Simulation starting at minute 480 (8:00). Input: N/A. Output: N/A.
 Simulation::Simulation() : time(480), paired(true) {}
 
 // overloads in order to share person as b-tree type
 
+// Adds a Patient to BTree records and the arrival queue if not already present. Input: patient value. Output: N/A.
 void Simulation::addPerson(Patient patient)
 {
     if (records.search(patient.getID()) != nullptr)
@@ -21,6 +28,7 @@ void Simulation::addPerson(Patient patient)
     patientQueue.push(p);
 }
 
+// Adds a Doctor to BTree records and the off-shift queue if not already present. Input: doctor value. Output: N/A.
 void Simulation::addPerson(Doctor doctor)
 {
     if (records.search(doctor.getID()) != nullptr)
@@ -34,6 +42,7 @@ void Simulation::addPerson(Doctor doctor)
 
 // full step for testing
 
+// Advances the simulation by one full minute (both phases). Input: N/A. Output: N/A.
 void Simulation::step()
 {
     stepPhase();
@@ -45,6 +54,7 @@ void Simulation::step()
 
 // half-step for GUI
 
+// Alternates between advancing time/updates and pairing patients with doctors. Input: N/A. Output: N/A.
 void Simulation::stepPhase()
 {
     if (paired)
@@ -61,6 +71,7 @@ void Simulation::stepPhase()
     }
 }
 
+// Discharges patients whose ETA has arrived and returns on-shift doctors to the BST. Input: N/A. Output: N/A.
 void Simulation::dischargePatients()
 {
     // loop through current pairings and discharge any completed visits
@@ -88,6 +99,7 @@ void Simulation::dischargePatients()
     }
 }
 
+// Moves doctors whose shift start time has arrived into the on-shift BST. Input: N/A. Output: N/A.
 void Simulation::startShifts()
 {
     while (!offShiftDoctors.empty() && offShiftDoctors.top()->getStartTime() <= time)
@@ -102,6 +114,7 @@ void Simulation::startShifts()
     }
 }
 
+// Pairs arrived waiting patients with highest-skill available doctors and marks timeouts. Input: N/A. Output: N/A.
 void Simulation::createPairings()
 {
     while (!patientQueue.empty() && patientQueue.top()->getArrivalTime() <= time)
@@ -134,31 +147,38 @@ void Simulation::createPairings()
     }
 }
 
+// Checks whether a doctor is currently within shift hours. Input: Doctor pointer d. Output: true if on shift.
 bool Simulation::isOnShift(Doctor *d)
 {
     return d->getStartTime() <= time && time < d->getEndTime();
 }
 
+// Computes treatment duration from patient condition and doctor skill. Input: Patient* p, Doctor* d. Output: minutes >= 1.
 int Simulation::treatmentTime(Patient *p, Doctor *d)
 {
     return std::max(1, 10 + p->getCondition() - d->getSkill());
 }
 
+// Looks up a Patient in BTree records by identity fields. Input: name, age, birthdate. Output: Patient* or nullptr.
 Patient *Simulation::findPatient(const std::string &name, int age, const std::string &birthdate)
 {
     Person probe(name, age, birthdate);
     return dynamic_cast<Patient *>(records.search(probe.getID()));
 }
 
+// Looks up a Doctor in BTree records by identity fields. Input: name, age, birthdate. Output: Doctor* or nullptr.
 Doctor *Simulation::findDoctor(const std::string &name, int age, const std::string &birthdate)
 {
     Person probe(name, age, birthdate);
     return dynamic_cast<Doctor *>(records.search(probe.getID()));
 }
 
+// Returns the current simulation time in minutes. Input: N/A. Output: time integer.
 int Simulation::getTime() { return time; }
+// Returns whether pairing has run for the current minute. Input: N/A. Output: paired boolean.
 bool Simulation::isPaired() { return paired; }
 
+// Returns arrived waiting patients sorted by priority. Input: N/A. Output: vector of Patient pointers.
 std::vector<Patient *> Simulation::getWaiting()
 {
     std::vector<Patient *> waiting;
@@ -175,6 +195,7 @@ std::vector<Patient *> Simulation::getWaiting()
     return waiting;
 }
 
+// Returns all doctors stored in BTree records. Input: N/A. Output: vector of Doctor pointers.
 std::vector<Doctor *> Simulation::getDoctors()
 {
     std::vector<Doctor *> doctors;
@@ -188,6 +209,7 @@ std::vector<Doctor *> Simulation::getDoctors()
     return doctors;
 }
 
+// Counts patients scheduled to arrive after the current minute. Input: N/A. Output: count integer.
 int Simulation::getUpcomingCount()
 {
     int count = 0;
@@ -202,6 +224,7 @@ int Simulation::getUpcomingCount()
     return count;
 }
 
+// Returns the patient currently paired with doctor d. Input: Doctor pointer d. Output: Patient* or nullptr.
 Patient *Simulation::patientOf(Doctor *d)
 {
     for (auto &pairing : currentPairings)
@@ -214,8 +237,11 @@ Patient *Simulation::patientOf(Doctor *d)
     return nullptr;
 }
 
+// Returns active doctor-patient pairings. Input: N/A. Output: const reference to pairings vector.
 const std::vector<std::pair<Doctor *, Patient *>> &Simulation::getPairings() { return currentPairings; }
+// Returns discharged patients. Input: N/A. Output: const reference to discharged vector.
 const std::vector<Patient *> &Simulation::getDischarged() { return discharged; }
+// Returns patients who failed to be treated in time. Input: N/A. Output: const reference to failed vector.
 const std::vector<Patient *> &Simulation::getFailed() { return failed; }
 
 /*

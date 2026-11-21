@@ -1,14 +1,11 @@
-// header comment
+/*
+Shelbe Yousey, Casen Parmer, Riley Herchert - Dr. Don Yessick - Lucas Hasting
+Defines the PatientStatus enum and Patient class for hospital visits.
+*/
 
 #pragma once
 
 #include "person.h"
-
-/*
-Shelbe Yousey, Casen Parmer, Riley Herchert - Dr. Don Yessick - Lucas Hasting
-
-This header file defines the Patient Class.
-*/
 
 enum class PatientStatus
 {

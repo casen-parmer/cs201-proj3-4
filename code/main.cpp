@@ -1,9 +1,14 @@
-// SFML view of the hospital simulation. Space advances one minute.
+/*
+Shelbe Yousey, Casen Parmer, Riley Herchert - Dr. Don Yessick - Lucas Hasting
+Runs the SFML hospital simulation viewer. Space advances one minute.
+*/
+
 #include <SFML/Graphics.hpp>
 #include <filesystem>
 #include "simulation.h"
 #include "datacontroller.h"
 
+// Launches the SFML hospital simulation window and event loop. Input: N/A. Output: exit status code.
 int main()
 {
     /*

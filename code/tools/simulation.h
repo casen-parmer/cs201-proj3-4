@@ -1,4 +1,7 @@
-// header comment
+/*
+Shelbe Yousey, Casen Parmer, Riley Herchert - Dr. Don Yessick - Lucas Hasting
+Declares the Simulation class managing hospital queues, pairings, and time steps.
+*/
 
 #pragma once
 

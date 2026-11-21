@@ -1,38 +1,50 @@
+/*
+Shelbe Yousey, Casen Parmer, Riley Herchert - Dr. Don Yessick - Lucas Hasting
+Implements BTree and Node operations for inserting, searching, and freeing Person records.
+*/
+
 #include "btree.h"
 
 namespace b_tree {
 
+    // Constructs a leaf Node with an initial key/value pair. Input: value Person pointer, key ID. Output: N/A.
     Node::Node(Person* value, std::size_t key) {
         values.push_back(value);
         keys.push_back(key);
         leaf = true;
     }
 
+    // Constructs an empty Node marked as leaf or internal. Input: isLeaf flag. Output: N/A.
     Node::Node(bool isLeaf) {
         this->leaf = isLeaf;
     }
 
+    // Inserts a key/value pair into this node at index i. Input: value, key, index i. Output: N/A.
     void Node::insertValueKeyPair(Person* value, std::size_t key, int i) {
         keys.insert(keys.begin()+i, key);
         values.insert(values.begin()+i, value);
     }
 
+    // Copies the upper half of a full node's keys and values into this node. Input: fullNode pointer, degree t. Output: N/A.
     void Node::fillWithValues(Node* fullNode, int t) {
         this->keys.assign(fullNode->keys.begin() + t,fullNode->keys.end());
         this->values.assign(fullNode->values.begin() + t, fullNode->values.end());
     }
 
+    // Truncates this node to keep only its lower t - 1 keys and values. Input: degree t. Output: N/A.
     void Node::shrinkNode(int t) {
         this->keys.resize(t - 1);
         this->values.resize(t - 1);
     }
 
 
+    // Constructs an empty BTree with the given minimum degree. Input: degree t. Output: N/A.
     BTree::BTree(int degree) {
         this->root = nullptr;
         this->t = degree;
     }
 
+    // Splits a full child node of parent at index and promotes its median key. Input: parent Node, child index. Output: N/A.
     void BTree::splitChild(Node* parent, int index) {
         //define the full node descending into
         Node* full_node = parent->children[index];
@@ -64,6 +76,7 @@ namespace b_tree {
     }
 
 
+    // Inserts a key/value pair into a non-full subtree rooted at node. Input: node, value, key. Output: N/A.
     void BTree::insertNonFull(Node* node, Person* value, std::size_t key) {
         //set i to last index of keys
         int i = node->keys.size() - 1;
@@ -101,6 +114,7 @@ namespace b_tree {
     }
 
 
+    // Inserts a Person record into the BTree by key. Input: value Person pointer, key ID. Output: N/A.
     void BTree::insert(Person* value, std::size_t key) {
         if (root == nullptr) {
             root = new Node(value, key);
@@ -120,6 +134,7 @@ namespace b_tree {
 
     }
 
+    // Recursively searches a subtree for the given key. Input: node pointer, key ID. Output: matching Person* or nullptr.
     Person* BTree::searchHelper(Node* node, std::size_t key){
         int i = 0;
         //search for position by going until key is greater than key in node
@@ -138,10 +153,12 @@ namespace b_tree {
         return searchHelper(node->children[i], key);
     }
 
+    // Searches the BTree for a record matching key. Input: key ID. Output: matching Person* or nullptr.
     Person* BTree::search(std::size_t key) {
         return root ? searchHelper(root, key) : nullptr;
     }
 
+    // Recursively collects all records in sorted key order. Input: node pointer, output vector. Output: N/A.
     void BTree::inorderHelper(Node* node, vector<Person*> &out) {
         int size = node->values.size();
         for (int i = 0; i < size; i++) {
@@ -156,6 +173,7 @@ namespace b_tree {
         }
     }
 
+    // Returns all stored Person pointers in ascending key order. Input: N/A. Output: vector of Person pointers.
     vector<Person*> BTree::inorder() {
         vector<Person*> out;
         if (root != nullptr) {
@@ -164,6 +182,7 @@ namespace b_tree {
         return out;
     }
 
+    // Recursively frees all nodes and owned Person records in a subtree. Input: node pointer. Output: N/A.
     void BTree::deleteTree(Node* node) {
         if (node == nullptr) {
             return;
@@ -178,6 +197,7 @@ namespace b_tree {
         delete node;
     }
 
+    // Destroys the BTree and all owned Person records. Input: N/A. Output: N/A.
     BTree::~BTree() {
         deleteTree(root);
     }

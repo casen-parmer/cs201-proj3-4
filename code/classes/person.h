@@ -1,14 +1,11 @@
-// header comment
+/*
+Shelbe Yousey, Casen Parmer, Riley Herchert - Dr. Don Yessick - Lucas Hasting
+Defines the base Person class shared by Doctor and Patient.
+*/
 
 #pragma once
 
 #include <string>
-
-/*
-Shelbe Yousey, Casen Parmer, Riley Herchert - Dr. Don Yessick - Lucas Hasting
-
-This header file defines the Person Class.
-*/
 
 class Person
 {

@@ -1,4 +1,7 @@
-// header comment
+/*
+Shelbe Yousey, Casen Parmer, Riley Herchert - Dr. Don Yessick - Lucas Hasting
+Defines the binary search tree Node and Tree classes for on-shift doctors.
+*/
 
 #pragma once
 

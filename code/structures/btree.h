@@ -1,3 +1,8 @@
+/*
+Shelbe Yousey, Casen Parmer, Riley Herchert - Dr. Don Yessick - Lucas Hasting
+Defines the BTree and Node classes for storing Person records by ID.
+*/
+
 #ifndef B_H_FILE
 #define B_H_FILE
 
