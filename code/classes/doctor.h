@@ -15,7 +15,7 @@ private:
     bool available;
     int startTime;
     int endTime;
-    bool hired;
+    bool hired = true;
 
 public:
     Doctor(std::string name, int age, std::string birthdate, int skill, bool available, int startTime, int endTime);
