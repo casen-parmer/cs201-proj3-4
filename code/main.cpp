@@ -93,6 +93,12 @@ int main()
         float y = 135.f;
         for (Doctor *d : sim.getDoctors())
         {
+            //ensures doctors finish the shift before fired
+            if (!d->isHired() && !sim.isOnShift(d))
+            {
+                continue;
+            }
+
             draw(doctor, 350, y);
             write(d->getName() + "  skill " + std::to_string(d->getSkill()), 395, y);
             write(timestamp(d->getStartTime()) + " - " + timestamp(d->getEndTime()), 395, y + 25);
