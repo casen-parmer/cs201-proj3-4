@@ -63,6 +63,7 @@ public:
     int getTime();
     bool isPaired();
     bool isOnShift(Doctor *d);
+    void fireDoctor(Doctor *d);
     std::vector<Patient *> getWaiting();
     std::vector<Doctor *> getDoctors();
     int getUpcomingCount();

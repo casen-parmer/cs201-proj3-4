@@ -148,6 +148,24 @@ void Simulation::createPairings()
     }
 }
 
+/* 
+Fires a doctor, removing them from the on shift BST and preventing future shifts
+Input: Doctor pointer d
+Output: N/A
+*/
+void Simulation::fireDoctor(Doctor *d) {
+    //fire the doctor
+    d->setHired(false);
+
+    //remove from BST
+    if (isOnShift(d)) {
+        bst::Node *to_remove = shiftDoctors.find(d->getID(), d->getSkill());
+        if (to_remove) {
+            shiftDoctors.remove(to_remove);
+        }
+    }
+}
+
 // Checks whether a doctor is currently within shift hours. Input: Doctor pointer d. Output: true if on shift.
 bool Simulation::isOnShift(Doctor *d)
 {
