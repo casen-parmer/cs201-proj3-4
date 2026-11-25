@@ -32,6 +32,13 @@ int main()
     patient.setOutlineThickness(1.f);
     sf::CircleShape doctor(16.f);
     doctor.setFillColor(sf::Color::Blue);
+
+
+    //setup the draw of the firing button for every doctor
+    sf::RectangleShape fireButton({26.f, 26.f});
+    fireButton.setFillColor(sf::Color::Red);
+    std::vector<std::pair<sf::FloatRect, Doctor *>> fireButtons;
+
     auto draw = [&](auto &shape, float x, float y)
     {
         shape.setPosition({x, y});
@@ -57,6 +64,19 @@ int main()
             {
                 if (key->code == sf::Keyboard::Key::Space)
                     sim.stepPhase();
+            }
+
+            //check for mouse click on fire button
+            if (const auto *mouse = event->getIf<sf::Event::MouseButtonPressed>()) {
+                if (mouse->button == sf::Mouse::Button::Left){
+                    //check all the fire buttons
+                    for (auto &[rect, d] : fireButtons){
+                        if (rect.contains(mouse->x, mouse->y)){
+                            sim.fireDoctor(d);
+                            break;
+                        }
+                    }
+                }
             }
         }
         if (!window.isOpen())
@@ -91,6 +111,10 @@ int main()
         }
 
         float y = 135.f;
+
+        //clear the old fire buttons
+        fireButtons.clear();
+
         for (Doctor *d : sim.getDoctors())
         {
             //ensures doctors finish the shift before fired
@@ -108,6 +132,13 @@ int main()
                       395, y + 50);
             else
                 write(sim.isOnShift(d) ? "Available" : "Off shift", 395, y + 50);
+
+            // draw the fire button for every doctor that is currently hired
+            if (d->isHired()) {
+                draw(fireButton, 660, y);
+                fireButtons.push_back({fireButton.getGlobalBounds(), d});
+            }
+            
             y += 115.f;
         }
         write("Upcoming arrivals: " + std::to_string(scheduled), 20, 605);
