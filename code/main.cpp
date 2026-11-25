@@ -69,12 +69,12 @@ int main()
             //check for mouse click on fire button
             if (const auto *mouse = event->getIf<sf::Event::MouseButtonPressed>()) {
                 //get mouse click position
-                sf::Vector2i pixelPos(mouseClick->position.x, mouseClick->position.y);
+                sf::Vector2i pixelPos(mouse->position.x, mouse->position.y);
                 sf::Vector2f worldPos = window.mapPixelToCoords(pixelPos);
                     
                 //check all the fire buttons
                 for (auto &[rect, d] : fireButtons){
-                    if (rect.getGlobalBounds().contains(worldPos)){
+                    if (rect.contains(worldPos)){
                         sim.fireDoctor(d);
                         break;
                     }
