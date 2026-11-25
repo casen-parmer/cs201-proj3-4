@@ -68,15 +68,18 @@ int main()
 
             //check for mouse click on fire button
             if (const auto *mouse = event->getIf<sf::Event::MouseButtonPressed>()) {
-                if (mouse->button == sf::Mouse::Button::Left){
-                    //check all the fire buttons
-                    for (auto &[rect, d] : fireButtons){
-                        if (rect.contains(mouse->x, mouse->y)){
-                            sim.fireDoctor(d);
-                            break;
-                        }
+                //get mouse click position
+                sf::Vector2i pixelPos(mouseClick->position.x, mouseClick->position.y);
+                sf::Vector2f worldPos = window.mapPixelToCoords(pixelPos);
+                    
+                //check all the fire buttons
+                for (auto &[rect, d] : fireButtons){
+                    if (rect.getGlobalBounds().contains(worldPos)){
+                        sim.fireDoctor(d);
+                        break;
                     }
                 }
+                
             }
         }
         if (!window.isOpen())
