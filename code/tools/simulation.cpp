@@ -136,7 +136,8 @@ void Simulation::createPairings()
         Doctor *d = shiftDoctors.max();
         bst::Node *to_remove = shiftDoctors.find(d->getID(), d->getSkill());
         shiftDoctors.remove(to_remove);
-        if (!isOnShift(d))
+        //make sure on shift and hired
+        if (!isOnShift(d) || !d->isHired())
         {
             continue;
         }

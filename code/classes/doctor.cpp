@@ -25,6 +25,11 @@ bool Doctor::isHired() {
     return hired;
 }
 
+// Updates the doctor's hired status. Input: hire boolean. Output: N/A.
+void Doctor::setHired(bool hire) {
+    hired = hire;
+}
+
 // Updates the doctor's availability. Input: availability boolean. Output: N/A.
 void Doctor::setAvailability(bool avail)
 {

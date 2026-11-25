@@ -22,6 +22,7 @@ public:
     int getSkill();
     bool isAvailable();
     bool isHired();
+    void setHired(bool hire);
     void setAvailability(bool avail);
     int getStartTime();
     int getEndTime();
