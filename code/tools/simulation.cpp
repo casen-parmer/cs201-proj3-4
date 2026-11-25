@@ -85,7 +85,7 @@ void Simulation::dischargePatients()
             discharged.push_back(p);
             d->setAvailability(true);
             // re-add doctor if still on shift
-            if (isOnShift(d))
+            if (isOnShift(d) && d->isHired())
             {
                 bst::Node *d_node = new bst::Node(d, d->getSkill());
                 shiftDoctors.insert(d_node);
@@ -106,7 +106,7 @@ void Simulation::startShifts()
     {
         Doctor *d = offShiftDoctors.top();
         offShiftDoctors.pop();
-        if (isOnShift(d))
+        if (isOnShift(d) && d->isHired())
         {
             bst::Node *d_node = new bst::Node(d, d->getSkill());
             shiftDoctors.insert(d_node);
