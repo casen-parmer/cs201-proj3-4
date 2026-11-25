@@ -94,7 +94,7 @@ int main()
         for (Doctor *d : sim.getDoctors())
         {
             //ensures doctors finish the shift before fired
-            if (!d->isHired() && !sim.isOnShift(d))
+            if (!d->isHired() && !sim.patientOf(d))
             {
                 continue;
             }
