@@ -15,11 +15,13 @@ private:
     bool available;
     int startTime;
     int endTime;
+    bool hired;
 
 public:
     Doctor(std::string name, int age, std::string birthdate, int skill, bool available, int startTime, int endTime);
     int getSkill();
     bool isAvailable();
+    bool isHired();
     void setAvailability(bool avail);
     int getStartTime();
     int getEndTime();
